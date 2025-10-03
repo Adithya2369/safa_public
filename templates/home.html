@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback Analyser</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../static/styles.css">
+
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <img src="../static/logo.png" alt="Customer Feedback Analyser Logo" class="logo">
+                <h1 class="tagline">A Customer Feedback Analyser</h1>
+            </div>
+        </header>
+        <div class="sample-download-box">
+        <p>Click below to download sample files for testing the tool.</p>
+        <a href="https://drive.google.com/drive/folders/1hSip0BHe0qx3b_f117CeW2Rx0fgYupjY?usp=sharing" target="_blank">Samples</a>
+    </div>
+
+        <div class="upload-container">
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="upload-area">
+                    <label for="fileInput" class="file-label">Choose Excel File</label>
+                    <input type="file" id="fileInput" name="file" accept=".xlsx,.xls" class="file-input">
+                    <div class="file-info" id="fileInfo">No file selected</div>
+                </div>
+                <button type="submit" id="uploadButton" disabled>Upload</button>
+            </form>
+        </div>
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ul>
+                <li>Upload an Excel file containing customer feedback</li>
+                <li>File should have 'Text' & 'Rating' columns with customer reviews and ratings respectively</li>
+                <li>Supported formats: .xlsx, .xls</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const fileInput = $('#fileInput');
+            const fileInfo = $('#fileInfo');
+            const uploadButton = $('#uploadButton');
+
+            fileInput.on('change', function() {
+                const files = this.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (validateFile(file)) {
+                        fileInfo.text(file.name);
+                        uploadButton.prop('disabled', false);
+                    } else {
+                        fileInfo.text('Please upload a valid Excel file');
+                        uploadButton.prop('disabled', true);
+                    }
+                }
+            });
+
+            function validateFile(file) {
+                const validTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
+                                  'application/vnd.ms-excel'];
+                return validTypes.includes(file.type);
+            }
+
+            $('#uploadForm').on('submit', function(e) {
+                if (!validateFile(fileInput[0].files[0])) {
+                    e.preventDefault();
+                    alert('Please upload a valid Excel file');
+                }
+            });
+        });
+    </script>
+    <a href="/safa">
+        <img src="../static/about.png" alt="About" class="about-icon">
+    </a>
+</body>
+</html>

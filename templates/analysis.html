@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Report - Customer Feedback Analyser</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <img src="../static/logo.png" alt="Customer Feedback Analyser Logo" class="logo">
+                <h1 class="tagline">A Customer Feedback Analyser</h1>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="suggestions-box">
+                <h2 class="suggestions-title">Analysis Report</h2>
+                <div class="suggestions-content">
+                    {{ message | safe }}
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <button onclick="window.location.href='/upload'" class="home-button">Back to Options</button>
+        </footer>
+    </div>
+</body>
+</html>

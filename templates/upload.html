@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Successful - Customer Feedback Analyser</title>
+    <link rel="stylesheet" href="../static/styles.css">
+
+    <style>
+        .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #333;
+}
+
+.loading-spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <img src="../static/logo.png" alt="Customer Feedback Analyser Logo" class="logo">
+                <h1 class="tagline">A Customer Feedback Analyser</h1>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="upload-success-box">
+                <h2 class="success-message">{{ message }}</h2>
+                
+                <div class="options-container">
+                    <div class="option-card">
+                        <h3>Summarize Reviews</h3>
+                        <p>This option will:</p>
+                        <ul>
+                            <li>Summarize each review individually</li>
+                            <li>Analyze sentiment (Positive/Negative/Neutral)</li>
+                            <li>Tag reviews into relevant categories</li>
+                        </ul>
+                        <button onclick="startSummarize()" class="action-button">Summarize</button>
+                    </div>
+
+                    <div class="option-card">
+                        <h3>Analysis Report</h3>
+                        <p>This option will:</p>
+                        <ul>
+                            <li>Analyze all reviews collectively</li>
+                            <li>Generate a comprehensive report</li>
+                            <li>Highlight key trends and patterns</li>
+                            <li>Provide overall sentiment analysis</li>
+                        </ul>
+                        <button onclick="window.location.href='/analysis'" class="action-button">Analysis</button>
+                    </div>
+
+                    <div class="option-card">
+                        <h3>Suggested Improvements</h3>
+                        <p>This option will:</p>
+                        <ul>
+                            <li>Identify areas needing improvement</li>
+                            <li>Suggest actionable recommendations</li>
+                            <li>Prioritize improvements based on feedback</li>
+                        </ul>
+                        <button onclick="window.location.href='/suggest'" class="action-button">View Suggestions</button>
+                    </div>
+
+                    <div class="option-card coming-soon">
+                        <div class="coming-soon-tag">To be released soon</div>
+                        <h3>Chat with Agent</h3>
+                        <p>This option will:</p>
+                        <ul>
+                            <li>Understand your business context</li>
+                            <li>Analyze all customer reviews</li>
+                            <li>Answer questions about your business</li>
+                            <li>Provide insights based on customer feedback</li>
+                        </ul>
+                        <button class="action-button disabled">Chat with Agent</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <button onclick="window.location.href='/'" class="end-session-button">End Session</button>
+        </footer>
+    </div>
+<script>
+function startSummarize() {
+    // Show a loading message
+    const loader = document.createElement('div');
+    loader.innerHTML = `
+        <div class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p>Processing reviews... This may take 1-2 minutes. Please wait.</p>
+        </div>
+    `;
+    document.body.appendChild(loader);
+
+    // Redirect after a slight delay to ensure loader is visible
+    setTimeout(() => {
+        window.location.href = '/dashboard';
+    }, 300); // Adjust if needed
+}
+</script>
+
+</body>
+</html>

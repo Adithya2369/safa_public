@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../static/styles.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+</head>
+<body>
+    <div class="dashboard_container">
+    <header class="header">
+        <div class="logo-container">
+            <img src="../static/logo.png" alt="Customer Feedback Analyser Logo" class="logo">
+            <h1 class="tagline">A Customer Feedback Analyser</h1>
+        </div>
+    </header>
+
+  <div class="top-container">
+    <div class="section">
+      <div class="section-title">Average User Rating</div>
+      <div class="section-content">
+        <div class="rating-container">
+          <div class="rating-emoji" id="emoji">😐</div>
+          <div class="stars" id="stars">★★★★★</div>
+          <div class="rating-text" id="ratingValue">{{ actr }} out of 5</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="section">
+      <div class="section-title">Predicted Satisfaction Level</div>
+      <div class="section-content">
+        <div class="bar-container">
+          <div class="bar-outline">
+            <div id="fill"></div>
+          </div>
+          <div id="heart">❤️</div>
+          <div class="rating-text" id="ratingValue">{{air}}%</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="section">
+      <div class="section-title">Sentiment Distribution</div>
+      <div class="section-content">
+      <canvas id="sentimentChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="section-title">Client Review Intelligence Table</div>
+    <div style="overflow-x:auto;">
+      {{ table|safe }}
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+// ========================================section - 1================================================
+  // const rating = 3.75;
+  const rating = {{ actr }};
+
+  function getEmoji(rating) {
+    if (rating <= 1) return '😠';
+    if (rating <= 2) return '🙁';
+    if (rating <= 3) return '😀';
+    if (rating <= 4) return '😍';
+    return '💗';
+  }
+
+  document.getElementById('emoji').textContent = getEmoji(rating);
+
+  const percentage = (rating / 5) * 100;
+  document.querySelector('.stars::before')?.style?.setProperty('width', `${percentage}%`);
+
+  // OR if ::before width doesn't update dynamically, use overlay method:
+  const stars = document.getElementById('stars');
+  const overlay = document.createElement('div');
+  overlay.textContent = '★★★★★';
+  overlay.style.position = 'absolute';
+  overlay.style.left = 0;
+  overlay.style.top = 0;
+  overlay.style.width = `${percentage}%`;
+  overlay.style.overflow = 'hidden';
+  overlay.style.whiteSpace = 'nowrap';
+  overlay.style.color = 'gold';
+  stars.appendChild(overlay);
+
+// ========================================section - 2================================================
+
+  // const predictedPercentage = 73; // Or replace with a dynamic value
+  const predictedPercentage = {{air}};
+  const fillEl = document.getElementById('fill');
+  const heartEl = document.getElementById('heart');
+
+  setTimeout(() => {
+    fillEl.style.width = predictedPercentage + '%';
+    heartEl.style.left = predictedPercentage + '%';
+  }, 100);
+
+// ========================================section - 3================================================
+
+  const pos = {{ pos }};
+  const neg = {{ neg }};
+  const neu = {{ neu }};
+  // const pos = 27;
+  // const neg = 33;
+  // const neu = 40;
+
+  const ctx = document.getElementById('sentimentChart').getContext('2d');
+
+  new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Positive', 'Negative', 'Neutral'],
+          datasets: [{
+              data: [pos, neg, neu],
+              backgroundColor: [
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+              ],
+              borderColor: '#fff',
+              borderWidth: 1.5
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  position: 'bottom',
+                  labels: {
+                      color: '#e0e0e0'
+                  }
+              }
+          }
+      }
+  });
+</script>
+
+<!-- ========================================section - 4 {TABLE}=========================================-->
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#myTable').DataTable({
+      responsive: true
+    });
+  });
+</script>
+
+        <footer class="footer">
+            <button onclick="window.location.href='/upload'" class="home-button">Back to Options</button>
+        </footer>
+
+</body>
+</html>
