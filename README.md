@@ -200,4 +200,4 @@ No `LICENSE` file was found in the repository. Add one if you want to make reuse
 
 ### Final notes
 
-If you want to skip all these and directly jump into the tool, refer the ready-to-use docker image at: https://hub.docker.com/repository/docker/adithya7reddy/safa/general
+If you want to skip all these and directly jump into the tool, refer the ready-to-use docker image at: [adithya7reddy/safa/](https://hub.docker.com/r/adithya7reddy/safa)
