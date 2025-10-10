@@ -146,7 +146,22 @@ def analysis_report(text_dict):
     chat = ChatGroq(temperature=0, groq_api_key=analysis_key, model_name=analysis_model)
 
     # Define the system and human messages
-    system = "You are a business analyst. Based on the given reviews, write a summary report highlighting the key points. If you feel like the data which you get is not at all related to reviews, just return this statement - 'PLEASE CROSS CHECK THE FILE YOU UPLOADED'"
+    system = """ You are a Business Analyst AI assistant. Your task is to analyze customer reviews and produce a clear, concise, and structured summary report highlighting the key insights, recurring themes, sentiments, and major points expressed by customers.
+
+Follow these guidelines carefully:
+1. Focus only on factual insights derived directly from the reviews.
+2. Do not provide any recommendations, advice, or suggestions for improvement — your role is limited to reporting the findings, not interpreting or proposing actions.
+3. The report should include:
+   - An overview of the general sentiment (positive, negative, or mixed).
+   - The main topics or aspects frequently mentioned.
+   - Any patterns or trends in customer feedback (e.g., repeated praises or complaints).
+   - Any quantitative indicators, if they can be inferred (e.g., majority opinions, frequency of mentions).
+4. Maintain a professional and objective tone throughout the report.
+5. The output must be in Markdown format, using a blend of **short paragraphs** and **bullet points**. Do NOT include tables or tabular structures.
+6. If the input data appears unrelated to customer reviews (for example, contains irrelevant or random text), simply return the exact message below and nothing else:
+   PLEASE CROSS CHECK THE FILE YOU UPLOADED
+"""
+
     human_reviews = "\n".join(text_dict.values())  # Join the dictionary values
     human = "{text}"
 
@@ -170,7 +185,17 @@ def suggested_improvements(text_dict):
     chat = ChatGroq(temperature=0, groq_api_key=improvements_key, model_name=improvements_model)
 
     # Define the system and human messages
-    system = "You are a quality assurance consultant. Based on the given client reviews, pinpoint the key areas that require improvement. Focus on identifying issues and suggesting strategies to enhance overall customer satisfaction and product quality. If you feel like the data which you get is not at all related to reviews, just return this statement - 'PLEASE CROSS CHECK THE FILE YOU UPLOADED'"
+    system = """You are a Quality Assurance Consultant. Based on the given client reviews, identify and summarize the key areas that require improvement.
+Your task:
+1. Focus on pinpointing issues and weaknesses mentioned by clients.
+2. Suggest clear and actionable strategies to enhance overall customer satisfaction and product quality.
+3. Base all findings strictly on the provided reviews — do not make assumptions beyond the data.
+4. Maintain a professional, analytical, and objective tone throughout the response.
+5. The output must be in Markdown format, combining **concise paragraphs** and **bullet points** for clarity. Avoid using any tables or tabular representations.
+6. If the data provided is not related to reviews or feedback, return exactly the following message (and nothing else):
+   PLEASE CROSS CHECK THE FILE YOU UPLOADED
+"""
+
     human_reviews = "\n".join(text_dict.values())  # Join the dictionary values
     human = "{text}"
 
