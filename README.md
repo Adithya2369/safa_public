@@ -2,7 +2,7 @@
 
 > **SAFA (S**tands for **Customer Feedback Analyser)** — A compact Flask-based web app that transforms customer reviews into actionable business insights using Groq / LangChain prompts. Upload an Excel file containing reviews, get per-review summaries + sentiment tagging, a dashboard with aggregate stats, and longer analysis & suggested improvements.
 
-### Try the tool at [safa](https://safa-mcha.onrender.com)
+### Try the tool at [safa](https://safa-mcha.onrender.com) 👈
 
 ---
 
